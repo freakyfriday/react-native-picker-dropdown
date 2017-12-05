@@ -5,9 +5,7 @@ export default class Picker extends Component {
   static Item = ReactNative.Picker.Item
 
   handlePress() {
-    const { children, onValueChange } = this.props
-    const labels = children.map(child => child.props.label)
-    const values = children.map(child => child.props.value)
+    const { labels, values, onValueChange } = this
     ActionSheetIOS.showActionSheetWithOptions(
       {
         options: [...labels, "Cancel"],
@@ -22,7 +20,7 @@ export default class Picker extends Component {
   }
 
   render() {
-    const { children, style } = this.props
+    const { children, style, onValueChange } = this.props
     const labels = children.map(child => child.props.label)
     const values = children.map(child => child.props.value)
     const flatStyle = (style ? StyleSheet.flatten(style) : {})
@@ -36,12 +34,15 @@ export default class Picker extends Component {
       }
       return(
         <TouchableOpacity
-          onPress={::this.handlePress}
-          style={{
-            alignSelf: 'stretch',
-            alignItems: 'center',
-            justifyContent: 'center',
-            flexDirection: 'row',
+          onPress       = {this.handlePress}
+          onValueChange = {onValueChange}
+          labels        = {labels}
+          values        = {values}
+          style         = {{
+            alignSelf        : 'stretch',
+            alignItems       : 'center',
+            justifyContent   : 'center',
+            flexDirection    : 'row',
             paddingHorizontal: 6,
           }}
         >
